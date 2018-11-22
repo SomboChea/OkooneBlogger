@@ -51,6 +51,7 @@ namespace OkooneBlogger.Migrations
                 name: "IX_Articles_AuthorId",
                 table: "Articles",
                 column: "AuthorId");
+
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
