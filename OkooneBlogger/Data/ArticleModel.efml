@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<efcore context-namespace="Data" schema="dbo" namespace="OkooneBlogger.Data" p1:Guid="ac966d16-8fc3-45de-8031-cfcff6082e8b" xmlns:p1="http://devart.com/schemas/EntityDeveloper/1.0">
+  <class name="Article" entity-set="Articles" table="Articles" p1:Guid="beee53b8-15a6-4f9d-b6d1-8766c44a4007">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="63e14fd6-956f-47c5-bf4a-2cbd1990862a">
+      <column name="Id" not-null="True" precision="10" scale="0" sql-type="int" p1:unicode="False" />
+    </id>
+    <property name="Title" type="String" p1:nullable="True" p1:ValidateMaxLength="255" p1:ValidateRequired="false" p1:Guid="37a78bbf-7f4c-4c8d-9ae4-78a88ef6b058">
+      <column name="Title" not-null="False" length="255" sql-type="nvarchar" p1:unicode="True" />
+    </property>
+    <property name="Description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="40e07ea4-68a6-4c2a-81c0-c44b193360e8">
+      <column name="Description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+    </property>
+    <property name="Date" type="DateTime" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="0f90138a-1ae3-4ccb-92d5-3194312327fe">
+      <column name="Date" not-null="False" sql-type="datetime2" p1:unicode="False" />
+    </property>
+    <property name="AuthorId" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="9af65f33-b9f4-43df-8e46-d501e93e53d0">
+      <column name="AuthorId" not-null="False" precision="10" scale="0" sql-type="int" p1:unicode="False" />
+    </property>
+  </class>
+  <class name="User" entity-set="Users" table="Users" p1:Guid="bb8a4869-a425-4e0c-88e1-61b8d2ff70ad">
+    <id name="Id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="d6e09064-cd26-4c69-b083-88d6b48ea89d">
+      <column name="Id" not-null="True" precision="10" scale="0" sql-type="int" p1:unicode="False" />
+    </id>
+    <property name="FullName" type="String" p1:nullable="True" p1:ValidateMaxLength="50" p1:ValidateRequired="false" p1:Guid="4626bad8-f0ea-4087-b796-79588b7f5d61">
+      <column name="FullName" not-null="False" length="50" sql-type="nvarchar" p1:unicode="True" />
+    </property>
+    <property name="Username" type="String" p1:nullable="True" p1:ValidateMaxLength="30" p1:ValidateRequired="false" p1:Guid="0d1a5e8d-9386-4fc3-9f3f-acfc70054ae5">
+      <column name="Username" not-null="False" length="30" sql-type="varchar" p1:unicode="False" />
+    </property>
+    <property name="Email" type="String" p1:nullable="True" p1:ValidateMaxLength="50" p1:ValidateRequired="false" p1:Guid="ebf0556d-874f-4d78-91be-dff54cebe71d">
+      <column name="Email" not-null="False" length="50" sql-type="varchar" p1:unicode="False" />
+    </property>
+    <property name="Password" type="String" p1:nullable="True" p1:ValidateMaxLength="100" p1:ValidateRequired="false" p1:Guid="89b8203d-8dd8-45c6-9d12-0e795fb07d00">
+      <column name="Password" not-null="False" length="100" sql-type="varchar" p1:unicode="False" />
+    </property>
+    <property name="CreatedAt" type="DateTime" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="4d8a10b3-ad8a-412d-9448-f13a1c8e7b22">
+      <column name="CreatedAt" not-null="False" sql-type="datetime2" p1:unicode="False" />
+    </property>
+  </class>
+  <associations>
+    <association name="User_Article" cardinality="OneToMany" p1:Guid="0941853f-a0df-4a54-885c-1962f6bdd7e0">
+      <end1 multiplicity="ZeroOrOne" name="User" class="Article" relation-class="User" constrained="True" lazy="False" p1:Guid="ff91c517-24d2-4851-863d-6afb01ffac3d">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="Articles" class="User" relation-class="Article" lazy="False" p1:Guid="723084f3-fc23-4ebd-b880-e2813a905377">
+        <property name="AuthorId" />
+      </end2>
+    </association>
+  </associations>
+</efcore>
