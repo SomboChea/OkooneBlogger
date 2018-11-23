@@ -22,9 +22,9 @@ namespace OkooneBlogger.Api.Controllers
         }
         
         [HttpGet]
-        public IEnumerable<User> Get()
+        public IEnumerable<User> Get(string with = "")
         {
-            return _userRepository.GetAllWithArticles();
+            return with.ToLower().Equals("articles") ? _userRepository.GetAllWithArticles() : _userRepository.GetAll();
         }
         
         [HttpGet("{id}")]

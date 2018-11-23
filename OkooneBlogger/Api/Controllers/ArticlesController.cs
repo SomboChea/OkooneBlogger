@@ -21,16 +21,36 @@ namespace OkooneBlogger.Api.Controllers
         }
         
         [HttpGet]
-        public IEnumerable<Article> Get(string date)
+        public IEnumerable<Article> Get(string date, string with = "")
         {
-            if(string.IsNullOrEmpty(date))
-                return _articleRepository.GetAllWithAuthor();
+            var withAuthors = false;
+            if (string.IsNullOrEmpty(date))
+            {
+                if (with.ToLower().Equals("authors"))
+                    withAuthors = true;
+            }
 
-            return _articleRepository.FindWithAuthor(a =>
-                (a.Date < Convert.ToDateTime(date)));
+            if (withAuthors)
+            {
+                if (!string.IsNullOrEmpty(date))
+                {
+                    return _articleRepository.FindWithAuthor(a =>
+                        (a.Date < Convert.ToDateTime(date)));
+                }
+
+                return _articleRepository.GetAllWithAuthor();
+            }
+
+            if (!string.IsNullOrEmpty(date))
+            {
+                return _articleRepository.Find(a =>
+                    (a.Date < Convert.ToDateTime(date)));
+            }
+
+            return _articleRepository.GetAll();
         }
 
-        [HttpGet("find")]
+        [HttpGet("find/{date}")]
         public IEnumerable<Article> InferiorWithDate(string date)
         {
             return _articleRepository.FindWithAuthor(a => (a.Date < Convert.ToDateTime(date)));

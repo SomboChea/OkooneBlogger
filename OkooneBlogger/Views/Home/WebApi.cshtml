@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewData["Title"] = "Web Api";
+    Layout = "_AdminLayout";
+}
+
+<h2 style="text-align: center">Web Api Lists [JSON Response]</h2>
+
+<hr />
+
+<h3><b>Articles</b></h3>
+<br />
+
+<li>List All Articles : <a href="/api/articles">/api/articles</a></li>
+<li>List All Articles with Authors : <a href="/api/articles?with=authors">/api/articles?with=authors</a></li>
+<li>Inferior Articles Date : <a href="/api/articles?date=2018-11-24">/api/articles?date=2018-11-24</a></li>
+<li>Inferior Articles Date using find: <a href="/api/articles/find/2018-11-24">/api/articles/2018-11-24</a></li>
+
+<hr />
+
+<h3><b>Users</b></h3>
+<br />
+
+<li>List All Users : <a href="/api/users">/api/users</a></li>
+<li>List All Users with Articles: <a href="/api/users?with=articles">/api/users?with=articles</a></li>
+<br />
