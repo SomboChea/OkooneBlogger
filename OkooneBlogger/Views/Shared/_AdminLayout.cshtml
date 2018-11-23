@@ -1,4 +1,5 @@
-﻿
+﻿@using Microsoft.AspNetCore.Routing
+
 @{
     Layout = "_Layout";
 }
@@ -15,27 +16,28 @@
                       menuButtons.Add()
                           .Text("New Article")
                           .Icon("file-add")
-                          .Url("Articles/Create");
+                          .Url("/Articles/Create");
+
                       menuButtons.Add()
                           .Text("View Articles")
                           .Icon("files")
-                          .Url("Articles");
+                          .Url("/Articles");
                   });
                   items.Add().Type(CommandType.SplitButton).Text("Users").MenuButtons(menuButtons =>
                   {
                       menuButtons.Add()
                           .Text("New User")
                           .Icon("file-add")
-                          .Url("Users/Create");
+                          .Url("/Users/Create");
                       menuButtons.Add()
                           .Text("View Users")
                           .Icon("files")
-                          .Url("Users");
+                          .Url("/Users");
                   });
                   items.Add().Type(CommandType.Separator);
                   items.Add().Type(CommandType.Button)
                       .Text("Profile")
-                      .Url("Profile");
+                      .Url("/Profile");
               })
               )
     </div>

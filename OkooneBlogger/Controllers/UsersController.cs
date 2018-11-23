@@ -64,7 +64,6 @@ namespace OkooneBlogger.Controllers
             return View(user);
         }
 
-        // POST: Default/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, [Bind("Username, FullName, Email, Password, Id")] User user)
@@ -79,7 +78,7 @@ namespace OkooneBlogger.Controllers
             }
             catch (Exception e)
             {
-                return View();
+                return Content(e.Message);
             }
         }
 
@@ -88,28 +87,21 @@ namespace OkooneBlogger.Controllers
             return null;
         }
 
+        [HttpGet]
         public IActionResult Delete(int id)
-        {
-            return null;
-        }
-
-        // POST: Default/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
         {
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(OkooneConstants.AUTH_ID)))
                 return RedirectToAction("Login", "Authentication");
 
             try
             {
-                // TODO: Add delete logic here
-
+                var user = _userRepository.GetById(id);
+                _userRepository.DeleteAndSaved(user);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception e)
             {
-                return View();
+                return Content(e.Message);
             }
         }
     }

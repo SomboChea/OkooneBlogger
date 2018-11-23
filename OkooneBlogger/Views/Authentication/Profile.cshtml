@@ -5,7 +5,7 @@
 
 @{
     ViewData["Title"] = "Profile";
-    Layout = "_Layout";
+    Layout = "_AdminLayout";
 
     var authId = HttpContextAccessor.HttpContext.Session.GetString(OkooneConstants.AUTH_ID);
     var authName = HttpContextAccessor.HttpContext.Session.GetString(OkooneConstants.AUTH_USERNAME);

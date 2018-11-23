@@ -20,37 +20,17 @@ namespace OkooneBlogger.Api.Controllers
         {
             _userRepository = userRepository;
         }
-
-        // GET: api/Users
+        
         [HttpGet]
         public IEnumerable<User> Get()
         {
             return _userRepository.GetAllWithArticles();
         }
-
-        // GET: api/Users/1
+        
         [HttpGet("{id}")]
         public User Get(int id)
         {
             return _userRepository.GetById(id);
-        }
-
-        // POST: api/Users
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT: api/Users/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
     }
 }

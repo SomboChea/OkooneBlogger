@@ -2,40 +2,55 @@
 
 @{
     ViewData["Title"] = "Edit";
-    Layout = "_Layout";
+    Layout = "_AdminLayout";
 }
-
-<h2>Edit</h2>
 
 <h4>Article</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
+    <div class="col-md-12">
+        <form asp-action="Edit" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
+                @(Html.Kendo().TextBoxFor(a => a.Title)
+                      .HtmlAttributes(new { @value = ViewBag.Title })
+                      )
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
+                @(Html.Kendo().EditorFor(a => a.Description)
+                      .HtmlAttributes(new { style = "height:440px", aria_label = "editor" })
+                      .Resizable(resizable => resizable.Content(true).Toolbar(true))
+                      .ImageBrowser(imageBrowser => imageBrowser
+                          .Image("~/shared/UserFiles/Images/{0}")
+                          .Read("Read", "ImageBrowser")
+                          .Create("Create", "ImageBrowser")
+                          .Destroy("Destroy", "ImageBrowser")
+                          .Upload("Upload", "ImageBrowser")
+                      )
+                      .Value(@<text>
+                                ViewBag.Description
+                              </text>)
+                      )
                 <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="AuthorId" class="control-label"></label>
-                <select asp-for="AuthorId" class="form-control" asp-items="ViewBag.AuthorId"></select>
-                <span asp-validation-for="AuthorId" class="text-danger"></span>
             </div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="Date" class="control-label"></label>
-                <input asp-for="Date" class="form-control" />
+                @(Html.Kendo().DateTimePickerFor(a => a.Date)
+                      .Value(DateTime.Now)
+                      .HtmlAttributes(new { style = "width: 100%", title = "Date" })
+                      .DateInput())
                 <span asp-validation-for="Date" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
+                @(Html.Kendo().Button()
+                      .Name("btnSave")
+                      .HtmlAttributes(new { type = "submit", @class = "k-primary" })
+                      .Content("Save")
+                      )
             </div>
         </form>
     </div>

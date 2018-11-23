@@ -55,9 +55,9 @@ namespace OkooneBlogger.Controllers
                 _articleRepository.AddAndSaved(article);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception e)
             {
-                return View();
+                return Content(e.Message);
             }
         }
 
@@ -70,9 +70,42 @@ namespace OkooneBlogger.Controllers
             return View(article);
         }
 
-        public IActionResult Delete()
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(int id, [Bind("Id, Title, Description, Date")] Article article)
         {
-            return null;
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString(OkooneConstants.AUTH_ID)))
+                return RedirectToAction("Login", "Authentication");
+
+            try
+            {
+                _articleRepository.UpdateAndSaved(article);
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception e)
+            {
+                return Content(e.Message);
+            }
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString(OkooneConstants.AUTH_ID)))
+                return RedirectToAction("Login", "Authentication");
+
+            try
+            {
+                var article = _articleRepository.GetById(id);
+                _articleRepository.DeleteAndSaved(article);
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception e)
+            {
+                return Content(e.Message);
+            }
         }
 
         public IActionResult Details()
