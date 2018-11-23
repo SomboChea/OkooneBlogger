@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -19,22 +20,32 @@ namespace OkooneBlogger.Controllers
             _userRepository = userRepository;
         }
 
-        public IActionResult Index(string q)
+        public IActionResult Index(string q, string sort)
         {
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(OkooneConstants.AUTH_ID)))
                 return RedirectToAction("Login", "Authentication");
 
-            IEnumerable<User> users;
+            IEnumerable<User> users = null;
 
             if (!string.IsNullOrEmpty(q))
             {
                 q = q.ToLower();
                 users = _userRepository.Find(a =>
                     (a.FullName.ToLower().Contains(q) || a.Email.ToLower().Contains(q) || a.Username.ToLower().Contains(q)));
-                return View(users);
+            }
+            else
+            {
+                users = _userRepository.GetAllWithArticles();
+
             }
 
-            users = _userRepository.GetAllWithArticles();
+            if (!string.IsNullOrEmpty(sort))
+            {
+                if (sort.ToLower().Equals("desc") || sort.ToLower().Equals("descending"))
+                {
+                    users = users.OrderByDescending(a => a.Id);
+                }
+            }
 
             return View(users);
         }
@@ -43,8 +54,7 @@ namespace OkooneBlogger.Controllers
         {
             return View();
         }
-
-        // POST: Default/Create
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind("Username, Email, Password, FullName, Id, Date")] User user)

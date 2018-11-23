@@ -8,11 +8,26 @@
 <h2 style="text-align: center">All Articles</h2>    
 
 <form asp-action="" method="get">
-@Html.DisplayName("Search : ")
+    @Html.DisplayName("Search Contents: ")
 
-@Html.Kendo().TextBox().Name("q").HtmlAttributes(new { type = "search", @placeholder = "Enter keys to search..."})
+    @Html.Kendo().TextBox().Name("q").HtmlAttributes(new { type = "search", @placeholder = "Enter keys to search..."})
+    
+    @(Html.Kendo().ComboBox()
+          .Name("sort")
+          .Placeholder("Select ordering...")
+          .BindTo(new List<string>() {
+              "Ascending",
+              "Descending"
+          })
+          .SelectedIndex(0)
+          .Suggest(true)
+          .HtmlAttributes(new { style = "width:20%;" })
+          )
+
+    <button class="k-button k-primary" id="get" style="margin-left: 10px">Search and Sort</button>
 
 </form>
+
 <br />
 <table class="table">
     <thead>

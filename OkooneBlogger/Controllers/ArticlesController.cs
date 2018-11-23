@@ -22,22 +22,33 @@ namespace OkooneBlogger.Controllers
             
         }
 
-        public IActionResult Index(string q)
+        public IActionResult Index(string q, string sort)
         {
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(OkooneConstants.AUTH_ID)))
                 return RedirectToAction("Login", "Authentication");
 
-            IEnumerable<Article> articles;
+            IEnumerable<Article> articles = null;
 
             if (!string.IsNullOrEmpty(q))
             {
                 q = q.ToLower();
                 articles = _articleRepository.FindWithAuthor(a =>
                     (a.Title.ToLower().Contains(q) || a.Description.ToLower().Contains(q)));
-                return View(articles);
+            }
+            else
+            {
+                articles = _articleRepository.GetAllWithAuthor();
             }
 
-            articles = _articleRepository.GetAllWithAuthor();
+
+            if (!string.IsNullOrEmpty(sort))
+            {
+                if (sort.ToLower().Equals("desc") || sort.ToLower().Equals("descending"))
+                {
+                    articles = articles.OrderByDescending(a => a.Id);
+                }
+            }
+
             return View(articles);
         }
 
