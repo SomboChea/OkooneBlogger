@@ -45,7 +45,12 @@ namespace OkooneBlogger.Controllers
             {
                 if (sort.ToLower().Equals("desc") || sort.ToLower().Equals("descending"))
                 {
-                    articles = articles.OrderByDescending(a => a.Id);
+                    articles = articles.OrderByDescending(a => a.Title).ThenByDescending(a => a.Description);
+                }
+
+                if (sort.ToLower().Equals("asc") || sort.ToLower().Equals("ascending"))
+                {
+                    articles = articles.OrderBy(a => a.Title).ThenBy(a => a.Description);
                 }
             }
 
