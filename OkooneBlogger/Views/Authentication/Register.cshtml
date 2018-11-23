@@ -7,46 +7,48 @@
 
 <div class="auth-section">
     <h2>Register Form</h2>
-    <ul id="fieldlist">
-        <li>
-            <label for="username">Username:</label>
-            @(Html.Kendo().TextBox()
-                  .Name("username")
-                  .HtmlAttributes(new { @placeholder = "Enter username" })
-                  .Value("")
-                  )
-        </li>
-        <li>
-            <label for="email">Email:</label>
-            @(Html.Kendo().TextBox()
-                  .Name("email")
-                  .HtmlAttributes(new { @placeholder = "Enter email address" })
-                  .Value("")
-                  )
-        </li>
-        <li>
-            <label for="password">Password:</label>
-            @(Html.Kendo().TextBox()
-                  .Name("password")
-                  .HtmlAttributes(new { @placeholder = "Enter password" })
-                  .Value("")
-                  )
-        </li>
-        <li>
-            <label for="confirm_password">Confirm Password:</label>
-            @(Html.Kendo().TextBox()
-                  .Name("confirm_password")
-                  .HtmlAttributes(new { @placeholder = "Enter confirm password"})
-                  .Value("")
-                  )
-        </li>
-    </ul>
-    <br />
-    @(Html.Kendo().Button()
-          .Name("btnRegister")
-          .HtmlAttributes(new { type = "button", @class = "k-primary" })
-          .Content("Register")
-          )
+    <form asp-action="Register">
+        <ul id="fieldlist">
+            <li>
+                <label for="username">Username:</label>
+                @(Html.Kendo().TextBox()
+                      .Name("username")
+                      .HtmlAttributes(new { @placeholder = "Enter username" })
+                      .Value("")
+                      )
+            </li>
+            <li>
+                <label for="email">Email:</label>
+                @(Html.Kendo().TextBox()
+                      .Name("email")
+                      .HtmlAttributes(new { type = "email", @placeholder = "Enter email address" })
+                      .Value("")
+                      )
+            </li>
+            <li>
+                <label for="password">Password:</label>
+                @(Html.Kendo().TextBox()
+                      .Name("password")
+                      .HtmlAttributes(new { type = "password", @placeholder = "Enter password" })
+                      .Value("")
+                      )
+            </li>
+            <li>
+                <label for="confirm_password">Confirm Password:</label>
+                @(Html.Kendo().TextBox()
+                      .Name("confirm_password")
+                      .HtmlAttributes(new { type = "password", @placeholder = "Enter confirm password"})
+                      .Value("")
+                      )
+            </li>
+        </ul>
+        <br />
+        @(Html.Kendo().Button()
+              .Name("btnRegister")
+              .HtmlAttributes(new { type = "submit", @class = "k-primary" })
+              .Content("Register")
+              )
+    </form>
 </div>
 
 <style>

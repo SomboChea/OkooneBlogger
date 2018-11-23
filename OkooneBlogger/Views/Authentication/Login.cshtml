@@ -6,32 +6,35 @@
 
 <div class="auth-section">
     <h2>Login Form</h2>
-    @Html.BeginForm() {
-    <ul id="fieldlist">
-        <li>
-            <label for="username">Username:</label>
-            @(Html.Kendo().TextBox()
-                  .Name("username")
-                  .HtmlAttributes(new { @placeholder = "Enter username" })
-                  .Value("")
-                  )
-        </li>
-        <li>
-            <label for="password">Password:</label>
-            @(Html.Kendo().TextBox()
-                  .Name("password")
-                  .HtmlAttributes(new { @placeholder = "Enter password" })
-                  .Value("")
-                  )
-        </li>
-    </ul>
-    <br />
-    @(Html.Kendo().Button()
-          .Name("btnLogin")
-          .HtmlAttributes(new { type = "button", @class = "k-primary" })
-          .Content("Login")
-          )
-    }
+    
+    <form asp-action="Login" method="post">
+        <ul id="fieldlist">
+            <li>
+                <label for="username">Username:</label>
+                @(Html.Kendo().TextBox()
+                      .Name("username")
+                      .HtmlAttributes(new { @placeholder = "Enter username" })
+                      .Value("")
+                      )
+            </li>
+            <li>
+                <label for="password">Password:</label>
+                @(Html.Kendo().TextBox()
+                      .Name("password")
+                      .HtmlAttributes(new { type = "password", @placeholder = "Enter password" })
+                      .Value("")
+                      )
+            </li>
+        </ul>
+        <br />
+        @(Html.Kendo().Button()
+              .Name("btnLogin")
+              .HtmlAttributes(new { type = "submit", @class = "k-primary" })
+              .Content("Login")
+              )
+    </form>
+    
+
 </div>
 
 <style>

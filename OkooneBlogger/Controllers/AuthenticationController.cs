@@ -40,7 +40,20 @@ namespace OkooneBlogger.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Register([Bind("Username, Email, Password, ConfirmPassword")] RegisterViewModel register)
         {
-            return null;
+            var user = new User
+            {
+                Username = register.Username,
+                Email = register.Email,
+                Password = register.Password,
+                Date = DateTime.Now
+            };
+
+            var result = false;
+
+            if (register.Password == register.ConfirmPassword)
+                result = _userRepository.AddAndSaved(user);
+
+            return result ? Content("Ok") : Content("Fail");
         }
     }
 }

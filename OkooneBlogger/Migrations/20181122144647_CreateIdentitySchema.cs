@@ -14,15 +14,16 @@ namespace OkooneBlogger.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Date = table.Column<DateTime>(nullable: false),
+                    Date = table.Column<DateTime>(nullable: false, defaultValue:DateTime.Now),
                     FullName = table.Column<string>(nullable: true),
-                    Username = table.Column<string>(nullable: true),
+                    Username = table.Column<string>(nullable: false),
                     Email = table.Column<string>(nullable: true),
-                    Password = table.Column<string>(nullable: true)
+                    Password = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
+                    table.UniqueConstraint("UN_Users_Username", x => x.Username);
                 });
 
             migrationBuilder.CreateTable(
