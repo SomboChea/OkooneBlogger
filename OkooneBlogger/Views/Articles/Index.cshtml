@@ -5,11 +5,15 @@
     Layout = "_AdminLayout";
 }
 
-<h2>Index</h2>
+<h2 style="text-align: center">All Articles</h2>    
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<form asp-action="" method="get">
+@Html.DisplayName("Search : ")
+
+@Html.Kendo().TextBox().Name("q").HtmlAttributes(new { type = "search", @placeholder = "Enter keys to search..."})
+
+</form>
+<br />
 <table class="table">
     <thead>
     <tr>
@@ -38,7 +42,7 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.AuthorId)
+                @Html.DisplayFor(modelItem => item.Author.Username)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Date)

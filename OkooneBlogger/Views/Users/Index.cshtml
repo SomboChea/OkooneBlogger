@@ -5,11 +5,15 @@
     Layout = "_AdminLayout";
 }
 
-<h2>View</h2>
+<h2 style="text-align: center">View All Users</h2>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<form asp-action="" method="get">
+    @Html.DisplayName("Search : ")
+
+    @Html.Kendo().TextBox().Name("q").HtmlAttributes(new { type = "search", @placeholder = "Enter keys to search..."})
+
+</form>
+<br />
 <table class="table">
     <thead>
     <tr>

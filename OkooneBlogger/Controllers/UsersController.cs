@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -18,12 +19,22 @@ namespace OkooneBlogger.Controllers
             _userRepository = userRepository;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string q)
         {
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(OkooneConstants.AUTH_ID)))
                 return RedirectToAction("Login", "Authentication");
 
-            var users = _userRepository.GetAllWithArticles();
+            IEnumerable<User> users;
+
+            if (!string.IsNullOrEmpty(q))
+            {
+                q = q.ToLower();
+                users = _userRepository.Find(a =>
+                    (a.FullName.ToLower().Contains(q) || a.Email.ToLower().Contains(q) || a.Username.ToLower().Contains(q)));
+                return View(users);
+            }
+
+            users = _userRepository.GetAllWithArticles();
 
             return View(users);
         }

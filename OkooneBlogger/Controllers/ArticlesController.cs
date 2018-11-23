@@ -22,12 +22,22 @@ namespace OkooneBlogger.Controllers
             
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string q)
         {
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(OkooneConstants.AUTH_ID)))
                 return RedirectToAction("Login", "Authentication");
 
-            var articles = _articleRepository.GetAllWithAuthor();
+            IEnumerable<Article> articles;
+
+            if (!string.IsNullOrEmpty(q))
+            {
+                q = q.ToLower();
+                articles = _articleRepository.FindWithAuthor(a =>
+                    (a.Title.ToLower().Contains(q) || a.Description.ToLower().Contains(q)));
+                return View(articles);
+            }
+
+            articles = _articleRepository.GetAllWithAuthor();
             return View(articles);
         }
 
@@ -79,6 +89,8 @@ namespace OkooneBlogger.Controllers
 
             try
             {
+                article.AuthorId = int.Parse(HttpContext.Session.GetString(OkooneConstants.AUTH_ID));
+
                 _articleRepository.UpdateAndSaved(article);
 
                 return RedirectToAction(nameof(Index));
@@ -108,9 +120,13 @@ namespace OkooneBlogger.Controllers
             }
         }
 
-        public IActionResult Details()
+        public IActionResult Details(int id)
         {
-            return null;
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString(OkooneConstants.AUTH_ID)))
+                return RedirectToAction("Login", "Authentication");
+
+            var article = _articleRepository.GetById(id);
+            return View(article);
         }
     }
 }
