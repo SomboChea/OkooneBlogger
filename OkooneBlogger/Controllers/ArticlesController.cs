@@ -13,12 +13,10 @@ namespace OkooneBlogger.Controllers
     public class ArticlesController : Controller
     {
         private readonly IArticleRepository _articleRepository;
-        private readonly IUserRepository _userRepository;
 
-        public ArticlesController(IArticleRepository articleRepository, IUserRepository userRepository)
+        public ArticlesController(IArticleRepository articleRepository)
         {
             _articleRepository = articleRepository;
-            _userRepository = userRepository;
             
         }
 
@@ -53,8 +51,8 @@ namespace OkooneBlogger.Controllers
                     articles = articles.OrderBy(a => a.Title).ThenBy(a => a.Description);
                 }
             }
-
-            return View(articles);
+            
+            return View(articles.Where(a => a.AuthorId == int.Parse(HttpContext.Session.GetString(OkooneConstants.AUTH_ID))));
         }
 
         public IActionResult Create()

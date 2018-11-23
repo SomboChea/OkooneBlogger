@@ -16,6 +16,12 @@ namespace OkooneBlogger.Repositories
         {
         }
 
+        public Article GetByIdWithAuthor(int id) =>
+            Context.Articles
+                .Where(a => a.Id == id)
+                .Include(a => a.Author)
+                .FirstOrDefault();
+
         public IEnumerable<Article> FindArticles(Func<Article, bool> predicate) => 
             Context.Articles
                 .Where(predicate)

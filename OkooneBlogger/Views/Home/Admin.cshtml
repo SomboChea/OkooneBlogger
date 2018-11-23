@@ -1,6 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Http
 @using OkooneBlogger.Helpers
-@model object
+@using Kendo.Mvc.UI
+
 @inject IHttpContextAccessor HttpContextAccessor
 
 @{
@@ -11,5 +12,43 @@
 
 }
 
+<br />
+<h2 style="text-align: center">Welcome - <b>@authName.ToUpper()</b></h2>
 
-<h2 style="text-align: center">Welcome</h2>
+<hr />
+<div class="quick-section k-content center">
+    @(Html.Kendo().ButtonGroup()
+                  .Name("quick-links")
+                  .Items(t =>
+                  {
+                      t.Add().Text("Create Article").HtmlAttributes(new { id = "btnCreateArticle"});
+                      t.Add().Text("Create User").HtmlAttributes(new { id = "btnCreateUser" }); ;
+                      t.Add().Text("View WebApi").HtmlAttributes(new { id = "btnViewWebApi" }); ;
+                  })
+    )
+</div>
+
+<style>
+    .quick-section {
+        text-align: center;
+    }
+</style>
+
+<script>
+
+    $(document).ready(function() {
+
+        $("#btnCreateArticle").click(function() {
+            window.location.assign("/Articles/Create");
+        });
+
+        $("#btnCreateUser").click(function () {
+            window.location.assign("/Users/Create");
+        });
+
+        $("#btnViewWebApi").click(function () {
+            window.location.assign("/WebApi");
+        });
+    })
+
+</script>
