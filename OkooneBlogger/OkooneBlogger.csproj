@@ -37,10 +37,6 @@
       </None>
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Areas\Identity\Services\" />
-    </ItemGroup>
-
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
         <DefineConstants>$(DefineConstants);RELEASE</DefineConstants>
     </PropertyGroup>

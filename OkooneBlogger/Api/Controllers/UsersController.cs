@@ -28,11 +28,11 @@ namespace OkooneBlogger.Api.Controllers
             return _userRepository.GetAllWithArticles();
         }
 
-        // GET: api/Users/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        // GET: api/Users/1
+        [HttpGet("{id}")]
+        public User Get(int id)
         {
-            return "value";
+            return _userRepository.GetById(id);
         }
 
         // POST: api/Users

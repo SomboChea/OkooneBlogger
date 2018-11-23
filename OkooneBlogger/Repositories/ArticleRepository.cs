@@ -19,7 +19,10 @@ namespace OkooneBlogger.Repositories
         public IEnumerable<Article> FindArticles(Func<Article, bool> predicate) => Find(predicate);
 
         public IEnumerable<Article> FindWithAuthor(Func<Article, bool> predicate) =>
-            Context.Articles.Include(a => a.Author).Where(predicate);
+            Context.Articles
+                .Include(a => a.Author)
+                .Where(predicate)
+                .ToList();
 
         public IEnumerable<Article> GetAllWithAuthor() => 
             Context.Articles

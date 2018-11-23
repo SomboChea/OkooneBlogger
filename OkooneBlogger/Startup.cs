@@ -33,6 +33,20 @@ namespace OkooneBlogger
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+
+            services.AddDistributedMemoryCache();
+            services.AddSession(options =>
+            {
+                options.Cookie.Name = ".OkooneBlogger.Session";
+                options.IdleTimeout = TimeSpan.FromSeconds(10);
+                // options.Cookie.HttpOnly = true;
+            });
+
             // Add framework services.
             services
                 .AddMvc()
@@ -70,6 +84,9 @@ namespace OkooneBlogger
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseAuthentication();
+            app.UseCookiePolicy();
+            app.UseSession();
+            
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

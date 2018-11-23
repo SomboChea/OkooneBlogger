@@ -19,37 +19,28 @@ namespace OkooneBlogger.Api.Controllers
         {
             _articleRepository = articleRepository;
         }
-
-        // GET: api/Articles
+        
         [HttpGet]
-        public IEnumerable<Article> Get()
+        public IEnumerable<Article> Get(string date)
         {
-            return _articleRepository.GetAllWithAuthor();
+            if(string.IsNullOrEmpty(date))
+                return _articleRepository.GetAllWithAuthor();
+
+            return _articleRepository.FindWithAuthor(a =>
+                (a.Date < Convert.ToDateTime(date)));
         }
 
-        //// GET: api/Articles/5
-        //[HttpGet("{id}", Name = "Get")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
+        [HttpGet("find")]
+        public IEnumerable<Article> InferiorWithDate(string date)
+        {
+            return _articleRepository.FindWithAuthor(a => (a.Date < Convert.ToDateTime(date)));
+        }
 
-        //// POST: api/Articles
-        //[HttpPost]
-        //public void Post([FromBody] string value)
-        //{
-        //}
-
-        //// PUT: api/Articles/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
-
-        //// DELETE: api/ApiWithActions/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
+        [HttpGet("{id}")]
+        public Article GetArticle(int id)
+        {
+            return _articleRepository.GetById(id);
+        }
+        
     }
 }
