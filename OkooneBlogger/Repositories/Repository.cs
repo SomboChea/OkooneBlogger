@@ -1,11 +1,10 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using OkooneBlogger.Data;
+using OkooneBlogger.Repositories.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Data;
-using Microsoft.EntityFrameworkCore;
-using OkooneBlogger.Data;
-using OkooneBlogger.Repositories.Interfaces;
 
 namespace OkooneBlogger.Repositories
 {
@@ -64,6 +63,7 @@ namespace OkooneBlogger.Repositories
         }
 
         public int Save() => Context.SaveChanges();
+
         public async Task<int> SaveAsync()
         {
             return await SaveChangesAsync();
@@ -72,7 +72,9 @@ namespace OkooneBlogger.Repositories
         public int Count() => Context.Set<T>().Count();
 
         public abstract void SoftDelete(T entity);
+
         public abstract void SoftDelete(T entity, out int saved);
+
         public abstract bool SoftDeleteAndSaved(T entity);
 
         private bool ToBool(object obj) => Convert.ToBoolean(obj);

@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Data;
-using Microsoft.EntityFrameworkCore;
-using OkooneBlogger.Data;
+﻿using OkooneBlogger.Data;
+using System;
 
 namespace OkooneBlogger.Repositories
 {

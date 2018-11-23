@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Data;
 using Microsoft.EntityFrameworkCore;
 using OkooneBlogger.Data;
 using OkooneBlogger.Repositories.Interfaces;
@@ -15,6 +13,12 @@ namespace OkooneBlogger.Repositories
         public ArticleRepository(OkooneDbContext context) : base(context)
         {
         }
+
+        public IEnumerable<Article> GetAllByAuthorId(int id) =>
+            Context.Articles
+                .Where(a => a.AuthorId == id)
+                .Include(a => a.Author)
+                .ToList();
 
         public Article GetByIdWithAuthor(int id) =>
             Context.Articles

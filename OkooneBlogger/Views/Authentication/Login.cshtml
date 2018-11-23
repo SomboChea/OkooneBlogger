@@ -1,40 +1,37 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Login";
     Layout = "_Layout";
 }
 
 <div class="auth-section">
     <h2>Login Form</h2>
-    
+
     <form asp-action="Login" method="post">
         <ul id="fieldlist">
             <li>
                 <label for="username">Username:</label>
                 @(Html.Kendo().TextBox()
-                      .Name("username")
-                      .HtmlAttributes(new { @placeholder = "Enter username" })
-                      .Value("")
-                      )
+                              .Name("username")
+                              .HtmlAttributes(new { @placeholder = "Enter username" })
+                              .Value("")
+                )
             </li>
             <li>
                 <label for="password">Password:</label>
                 @(Html.Kendo().TextBox()
-                      .Name("password")
-                      .HtmlAttributes(new { type = "password", @placeholder = "Enter password" })
-                      .Value("")
-                      )
+                              .Name("password")
+                              .HtmlAttributes(new { type = "password", @placeholder = "Enter password" })
+                              .Value("")
+                )
             </li>
         </ul>
         <br />
         @(Html.Kendo().Button()
-              .Name("btnLogin")
-              .HtmlAttributes(new { type = "submit", @class = "k-primary" })
-              .Content("Login")
-              )
+                      .Name("btnLogin")
+                      .HtmlAttributes(new { type = "submit", @class = "k-primary" })
+                      .Content("Login")
+        )
     </form>
-    
-
 </div>
 
 <style>

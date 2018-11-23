@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using OkooneBlogger.Models;
 using OkooneBlogger.Repositories.Interfaces;
+using System;
+using System.Collections.Generic;
 
 namespace OkooneBlogger.Api.Controllers
 {
@@ -19,7 +16,7 @@ namespace OkooneBlogger.Api.Controllers
         {
             _articleRepository = articleRepository;
         }
-        
+
         [HttpGet]
         public IEnumerable<Article> Get(string date, string with = "")
         {
@@ -61,6 +58,5 @@ namespace OkooneBlogger.Api.Controllers
         {
             return _articleRepository.GetById(id);
         }
-        
     }
 }

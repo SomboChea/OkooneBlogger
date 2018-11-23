@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Data;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OkooneBlogger.Helpers;
 using OkooneBlogger.Models;
-using OkooneBlogger.Repositories;
 using OkooneBlogger.Repositories.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace OkooneBlogger.Controllers
 {
@@ -25,7 +23,7 @@ namespace OkooneBlogger.Controllers
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(OkooneConstants.AUTH_ID)))
                 return RedirectToAction("Login", "Authentication");
 
-            IEnumerable<User> users = null;
+            IEnumerable<User> users;
 
             if (!string.IsNullOrEmpty(q))
             {
@@ -36,7 +34,6 @@ namespace OkooneBlogger.Controllers
             else
             {
                 users = _userRepository.GetAllWithArticles();
-
             }
 
             if (!string.IsNullOrEmpty(sort))
@@ -54,7 +51,7 @@ namespace OkooneBlogger.Controllers
         {
             return View();
         }
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind("Username, Email, Password, FullName, Id, Date")] User user)
@@ -66,9 +63,8 @@ namespace OkooneBlogger.Controllers
             {
                 // if (!ModelState.IsValid) return NotFound();
                 _userRepository.AddAndSaved(user);
-                
-                return RedirectToAction(nameof(Index));
 
+                return RedirectToAction(nameof(Index));
             }
             catch (Exception e)
             {

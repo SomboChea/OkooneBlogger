@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using OkooneBlogger.Models;
-using OkooneBlogger.Repositories;
 using OkooneBlogger.Repositories.Interfaces;
+using System.Collections.Generic;
 
 namespace OkooneBlogger.Api.Controllers
 {
@@ -20,13 +15,13 @@ namespace OkooneBlogger.Api.Controllers
         {
             _userRepository = userRepository;
         }
-        
+
         [HttpGet]
         public IEnumerable<User> Get(string with = "")
         {
             return with.ToLower().Equals("articles") ? _userRepository.GetAllWithArticles() : _userRepository.GetAll();
         }
-        
+
         [HttpGet("{id}")]
         public User Get(int id)
         {

@@ -1,6 +1,6 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
+using System;
 
 namespace OkooneBlogger.Migrations
 {
@@ -14,11 +14,11 @@ namespace OkooneBlogger.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Date = table.Column<DateTime>(nullable: false, defaultValue:DateTime.Now),
-                    FullName = table.Column<string>(nullable: true, maxLength:50),
-                    Username = table.Column<string>(nullable: false, maxLength:50),
-                    Email = table.Column<string>(nullable: true, maxLength:50),
-                    Password = table.Column<string>(nullable: false, maxLength:50)
+                    Date = table.Column<DateTime>(nullable: false, defaultValue: DateTime.Now),
+                    FullName = table.Column<string>(nullable: true, maxLength: 50),
+                    Username = table.Column<string>(nullable: false, maxLength: 50),
+                    Email = table.Column<string>(nullable: true, maxLength: 50),
+                    Password = table.Column<string>(nullable: false, maxLength: 50)
                 },
                 constraints: table =>
                 {
@@ -32,8 +32,8 @@ namespace OkooneBlogger.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Date = table.Column<DateTime>(nullable: false),
-                    Title = table.Column<string>(nullable: true, maxLength:255),
-                    Description = table.Column<string>(nullable: true, maxLength:1000),
+                    Title = table.Column<string>(nullable: true, maxLength: 255),
+                    Description = table.Column<string>(nullable: true, maxLength: 1000),
                     AuthorId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -51,7 +51,6 @@ namespace OkooneBlogger.Migrations
                 name: "IX_Articles_AuthorId",
                 table: "Articles",
                 column: "AuthorId");
-
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

@@ -1,23 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
 using OkooneBlogger.Data;
-using OkooneBlogger.Helpers;
-using OkooneBlogger.Models;
 using OkooneBlogger.Repositories;
 using OkooneBlogger.Repositories.Interfaces;
+using System;
 
 namespace OkooneBlogger
 {
@@ -29,7 +21,6 @@ namespace OkooneBlogger
         }
 
         public IConfiguration Configuration { get; }
-
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -91,7 +82,7 @@ namespace OkooneBlogger
             // app.UseAuthentication();
             // app.UseCookiePolicy();
             app.UseSession();
-            
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

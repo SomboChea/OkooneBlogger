@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OkooneBlogger.Helpers;
@@ -25,7 +24,7 @@ namespace OkooneBlogger.Controllers
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(OkooneConstants.AUTH_ID)))
                 return RedirectToAction("Login", "Authentication");
 
-            IEnumerable<Article> articles = null;
+            IEnumerable<Article> articles;
 
             if (!string.IsNullOrEmpty(q))
             {
@@ -51,8 +50,10 @@ namespace OkooneBlogger.Controllers
                     articles = articles.OrderBy(a => a.Title).ThenBy(a => a.Description);
                 }
             }
-            
-            return View(articles.Where(a => a.AuthorId == int.Parse(HttpContext.Session.GetString(OkooneConstants.AUTH_ID))));
+
+            var authId = int.Parse(HttpContext.Session.GetString(OkooneConstants.AUTH_ID));
+
+            return View(articles.Where(a => a.AuthorId == authId));
         }
 
         public IActionResult Create()
@@ -139,7 +140,7 @@ namespace OkooneBlogger.Controllers
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(OkooneConstants.AUTH_ID)))
                 return RedirectToAction("Login", "Authentication");
 
-            var article = _articleRepository.GetById(id);
+            var article = _articleRepository.GetByIdWithAuthor(id);
             return View(article);
         }
     }

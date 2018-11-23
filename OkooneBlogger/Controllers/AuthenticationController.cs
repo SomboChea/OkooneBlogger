@@ -1,20 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Session;
 using OkooneBlogger.Helpers;
 using OkooneBlogger.Models;
 using OkooneBlogger.Repositories.Interfaces;
+using System;
+using System.Linq;
 
 namespace OkooneBlogger.Controllers
 {
     public class AuthenticationController : Controller
     {
         private readonly IUserRepository _userRepository;
-        
+
         public AuthenticationController(IUserRepository userRepository)
         {
             _userRepository = userRepository;
@@ -58,7 +55,7 @@ namespace OkooneBlogger.Controllers
         public IActionResult Login([Bind("Username, Password")] LoginViewModel login)
         {
             var user = _userRepository.Find(u => ((u.Username == login.Username) && (u.Password == login.Password))).FirstOrDefault();
-            
+
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(OkooneConstants.AUTH_ID)))
             {
                 if (user != null && !string.IsNullOrEmpty(user.Username))
@@ -94,7 +91,7 @@ namespace OkooneBlogger.Controllers
             if (checkUsername != null && !string.IsNullOrEmpty(checkUsername.Username))
                 return Content("Failed, user already exist!");
 
-;            var user = new User
+            ; var user = new User
             {
                 Username = register.Username,
                 Email = register.Email,
@@ -120,6 +117,5 @@ namespace OkooneBlogger.Controllers
         {
             return View();
         }
-
     }
 }

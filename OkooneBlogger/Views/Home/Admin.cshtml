@@ -18,13 +18,13 @@
 <hr />
 <div class="quick-section k-content center">
     @(Html.Kendo().ButtonGroup()
-                  .Name("quick-links")
-                  .Items(t =>
-                  {
-                      t.Add().Text("Create Article").HtmlAttributes(new { id = "btnCreateArticle"});
-                      t.Add().Text("Create User").HtmlAttributes(new { id = "btnCreateUser" }); ;
-                      t.Add().Text("View WebApi").HtmlAttributes(new { id = "btnViewWebApi" }); ;
-                  })
+                          .Name("quick-links")
+                          .Items(t =>
+                          {
+                              t.Add().Text("Create Article").HtmlAttributes(new { id = "btnCreateArticle" });
+                              t.Add().Text("Create User").HtmlAttributes(new { id = "btnCreateUser" }); ;
+                              t.Add().Text("View WebApi").HtmlAttributes(new { id = "btnViewWebApi" }); ;
+                          })
     )
 </div>
 
@@ -36,9 +36,9 @@
 
 <script>
 
-    $(document).ready(function() {
+    $(document).ready(function () {
 
-        $("#btnCreateArticle").click(function() {
+        $("#btnCreateArticle").click(function () {
             window.location.assign("/Articles/Create");
         });
 
@@ -50,5 +50,4 @@
             window.location.assign("/WebApi");
         });
     })
-
 </script>
