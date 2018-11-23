@@ -1,9 +1,11 @@
 ﻿@using Data
 @model OkooneBlogger.Models.Article
+@removeTagHelper "*, Microsoft.AspNet.Mvc.Razor"
+@removeTagHelper "*, Microsoft.AspNetCore.Mvc.Razor"
 
 @{
     ViewData["Title"] = "Create";
-    Layout = "_Layout";
+    Layout = "_AdminLayout";
 }
 
 @{
@@ -11,40 +13,51 @@
     var users = (IEnumerable<OkooneBlogger.Models.User>)ViewData["users"];
 
 }
-
-<h2>Create</h2>
-
-<h4>Article</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
+    <div class="col-md-12">
+        <form asp-action="Create" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
+                @(Html.Kendo().TextBoxFor(a => a.Title)
+                              .HtmlAttributes(new { @placeholder = "Enter title" })
+                )
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
+                @(Html.Kendo().EditorFor(a => a.Description)
+                              .HtmlAttributes(new { style = "height:440px", aria_label = "editor" })
+                              .Resizable(resizable => resizable.Content(true).Toolbar(true))
+                              .ImageBrowser(imageBrowser => imageBrowser
+                                  .Image("~/shared/UserFiles/Images/{0}")
+                                  .Read("Read", "ImageBrowser")
+                                  .Create("Create", "ImageBrowser")
+                                  .Destroy("Destroy", "ImageBrowser")
+                                  .Upload("Upload", "ImageBrowser")
+                              )
+                              .Value(@<text>
+
+                            </text>)
+                )
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="AuthorId" class="control-label"></label>
-                <select asp-for="AuthorId" class="form-control" asp-items="ViewBag.AuthorId">
-                    @foreach (var user in users)
-                    {
-                      <option value="@Html.DisplayName(user.Id + "")">@Html.DisplayName(user.FullName)</option>
-                    }
-                </select>
-            </div>
+
             <div class="form-group">
                 <label asp-for="Date" class="control-label"></label>
-                <input asp-for="Date" class="form-control" />
+                @(Html.Kendo().DateTimePickerFor(a => a.Date)
+                                      .Value(DateTime.Now)
+                                      .HtmlAttributes(new { style = "width: 100%", title = "Date" })
+                                      .DateInput()
+                )
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                @(Html.Kendo().Button()
+                              .Name("btnCreate")
+                              .HtmlAttributes(new { type = "submit", @class = "k-primary" })
+                              .Content("Create")
+                )
             </div>
         </form>
     </div>
@@ -55,6 +68,11 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
+<style>
+    input[type="text"] {
+        width: 100%
+    }
+</style>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

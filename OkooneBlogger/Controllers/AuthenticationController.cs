@@ -68,7 +68,7 @@ namespace OkooneBlogger.Controllers
                     return RedirectToAction("Admin", "Home");
                 }
 
-                return Content("Has Logged In");
+                return RedirectToAction("Login");
             }
 
             return Content("Fail");
@@ -115,7 +115,7 @@ namespace OkooneBlogger.Controllers
             return RedirectToAction("Login");
         }
 
-        [HttpGet]
+        [HttpGet("Profile")]
         public IActionResult Profile()
         {
             return View();

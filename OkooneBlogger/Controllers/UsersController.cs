@@ -43,7 +43,7 @@ namespace OkooneBlogger.Controllers
 
             try
             {
-                if (!ModelState.IsValid) return NotFound();
+                // if (!ModelState.IsValid) return NotFound();
                 _userRepository.AddAndSaved(user);
                 
                 return RedirectToAction(nameof(Index));

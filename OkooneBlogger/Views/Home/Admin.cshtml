@@ -5,14 +5,11 @@
 
 @{
     ViewBag.Title = "Admin";
-    Layout = "_Layout";
+    Layout = "_AdminLayout";
 
     var authName = HttpContextAccessor.HttpContext.Session.GetString(OkooneConstants.AUTH_USERNAME);
 
 }
 
-<h2>Admin</h2>
 
-<br />
-
-<h1>@authName</h1>
+<h2 style="text-align: center">Welcome</h2>

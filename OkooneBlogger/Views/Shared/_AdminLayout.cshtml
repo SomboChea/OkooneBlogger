@@ -1,0 +1,46 @@
+﻿
+@{
+    Layout = "_Layout";
+}
+
+@section AdminMenu
+{
+    <div class="demo-section k-content wide">
+        @(Html.Kendo().ToolBar()
+              .Name("ToolBar")
+              .Items(items =>
+              {
+                  items.Add().Type(CommandType.SplitButton).Text("Articles").MenuButtons(menuButtons =>
+                  {
+                      menuButtons.Add()
+                          .Text("New Article")
+                          .Icon("file-add")
+                          .Url("Articles/Create");
+                      menuButtons.Add()
+                          .Text("View Articles")
+                          .Icon("files")
+                          .Url("Articles");
+                  });
+                  items.Add().Type(CommandType.SplitButton).Text("Users").MenuButtons(menuButtons =>
+                  {
+                      menuButtons.Add()
+                          .Text("New User")
+                          .Icon("file-add")
+                          .Url("Users/Create");
+                      menuButtons.Add()
+                          .Text("View Users")
+                          .Icon("files")
+                          .Url("Users");
+                  });
+                  items.Add().Type(CommandType.Separator);
+                  items.Add().Type(CommandType.Button)
+                      .Text("Profile")
+                      .Url("Profile");
+              })
+              )
+    </div>
+}
+
+@RenderBody()
+
+@RenderSection("Scripts", required: false)

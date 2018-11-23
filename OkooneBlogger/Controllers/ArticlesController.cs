@@ -36,24 +36,22 @@ namespace OkooneBlogger.Controllers
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(OkooneConstants.AUTH_ID)))
                 return RedirectToAction("Login", "Authentication");
 
-            var users = _userRepository.GetAll();
-            ViewData["users"] = users;
-
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("Title, Description, AuthorId, Date")]
+        public IActionResult Create([Bind("Title, Description, Date")]
             Article article)
         {
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(OkooneConstants.AUTH_ID)))
                 return RedirectToAction("Login", "Authentication");
 
-            if (!ModelState.IsValid) return NotFound();
+            //if (!ModelState.IsValid) return Content("Content is not valid!");
 
             try
             {
+                article.AuthorId = int.Parse(HttpContext.Session.GetString(OkooneConstants.AUTH_ID));
                 _articleRepository.AddAndSaved(article);
                 return RedirectToAction(nameof(Index));
             }

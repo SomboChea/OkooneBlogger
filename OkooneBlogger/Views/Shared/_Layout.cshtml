@@ -43,6 +43,8 @@
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
+    
+    @RenderSection("CSS", required: false)
 
 </head>
 <body>
@@ -53,37 +55,40 @@
             </div>
         </div>
     </div>
+    
     <div class="container menu-content">
-        <div id="responsive-panel">
-            @(Html.Kendo().Menu()
-                                  .Name("Menu")
-                                  .Items(items =>
-                                  {
-                                      items.Add()
-                                          .Text("Home")
-                                          .Action("Index", "Home");
-                                      items.Add()
-                                          .Text("Login")
-                                          .Action("Login", "Authentication")
-                                          .Visible(!hasAuth);
-                                      items.Add()
-                                          .Text("Register")
-                                          .Action("Register", "Authentication")
-                                          .Visible(!hasAuth);
-                                      items.Add()
-                                          .Text("Administrator")
-                                          .Action("Admin", "Home")
-                                          .Visible(hasAuth);
-                                      items.Add()
-                                          .Text("Logout")
-                                          .Action("Logout", "Authentication")
-                                          .Visible(hasAuth);
-                                  })
-            )
+            <div id="responsive-panel">
+                @(Html.Kendo().Menu()
+                      .Name("Menu")
+                      .Items(items =>
+                      {
+                          items.Add()
+                              .Text("Home")
+                              .Action("Index", "Home");
+                          items.Add()
+                              .Text("Login")
+                              .Action("Login", "Authentication")
+                              .Visible(!hasAuth);
+                          items.Add()
+                              .Text("Register")
+                              .Action("Register", "Authentication")
+                              .Visible(!hasAuth);
+                          items.Add()
+                              .Text("Administrator")
+                              .Action("Admin", "Home")
+                              .Visible(hasAuth);
+                          items.Add()
+                              .Text("Logout")
+                              .Action("Logout", "Authentication")
+                              .Visible(hasAuth);
+                      })
+                      )
+            </div>
+            <button id="configure" class="k-rpanel-toggle k-button k-primary btn-toggle"><span class="k-icon k-i-hbars"></span></button>
         </div>
-        <button id="configure" class="k-rpanel-toggle k-button k-primary btn-toggle"><span class="k-icon k-i-hbars"></span></button>
-    </div>
+
     <div class="container body-content">
+        @RenderSection("AdminMenu", required: false)
         @RenderBody()
         <footer class="footer">
             <span class="text-muted">Copyright © @DateTime.Now.Year Okoone Blogger.</span>

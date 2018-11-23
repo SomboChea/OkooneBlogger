@@ -1,8 +1,17 @@
-﻿
+﻿@using Microsoft.AspNetCore.Http
+@using OkooneBlogger.Helpers
+
+@inject IHttpContextAccessor HttpContextAccessor
+
 @{
     ViewData["Title"] = "Profile";
     Layout = "_Layout";
+
+    var authId = HttpContextAccessor.HttpContext.Session.GetString(OkooneConstants.AUTH_ID);
+    var authName = HttpContextAccessor.HttpContext.Session.GetString(OkooneConstants.AUTH_USERNAME);
+
 }
 
 <h2>Profile</h2>
 
+<h3>@authName</h3>

@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using OkooneBlogger.Helpers;
 
 namespace OkooneBlogger.Controllers
 {
@@ -16,6 +18,9 @@ namespace OkooneBlogger.Controllers
         [HttpGet("Admin")]
         public IActionResult Admin()
         {
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString(OkooneConstants.AUTH_ID)))
+                return RedirectToAction("Login", "Authentication");
+
             return View();
         }
     }
