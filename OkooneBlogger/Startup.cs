@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
 using OkooneBlogger.Data;
+using OkooneBlogger.Helpers;
 using OkooneBlogger.Models;
 using OkooneBlogger.Repositories;
 using OkooneBlogger.Repositories.Interfaces;
@@ -33,17 +34,17 @@ namespace OkooneBlogger
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<CookiePolicyOptions>(options =>
-            {
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
+            //services.Configure<CookiePolicyOptions>(options =>
+            //{
+            //    options.CheckConsentNeeded = context => true;
+            //    options.MinimumSameSitePolicy = SameSiteMode.None;
+            //});
 
             services.AddDistributedMemoryCache();
             services.AddSession(options =>
             {
                 options.Cookie.Name = ".OkooneBlogger.Session";
-                options.IdleTimeout = TimeSpan.FromSeconds(10);
+                options.IdleTimeout = TimeSpan.FromDays(1);
                 // options.Cookie.HttpOnly = true;
             });
 
@@ -65,6 +66,10 @@ namespace OkooneBlogger
                 options.UseSqlServer(Configuration.GetConnectionString("SQLServerConnection")));
             services.AddTransient<IArticleRepository, ArticleRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            // services.AddHttpContextAccessor();
+
             services.AddKendo();
         }
 
@@ -83,8 +88,8 @@ namespace OkooneBlogger
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseAuthentication();
-            app.UseCookiePolicy();
+            // app.UseAuthentication();
+            // app.UseCookiePolicy();
             app.UseSession();
             
             app.UseMvc(routes =>

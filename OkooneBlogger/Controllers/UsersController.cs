@@ -2,6 +2,7 @@
 using Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using OkooneBlogger.Helpers;
 using OkooneBlogger.Models;
 using OkooneBlogger.Repositories;
 using OkooneBlogger.Repositories.Interfaces;
@@ -19,6 +20,9 @@ namespace OkooneBlogger.Controllers
 
         public IActionResult Index()
         {
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString(OkooneConstants.AUTH_ID)))
+                return RedirectToAction("Login", "Authentication");
+
             var users = _userRepository.GetAllWithArticles();
 
             return View(users);
@@ -34,6 +38,9 @@ namespace OkooneBlogger.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind("Username, Email, Password, FullName, Id, Date")] User user)
         {
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString(OkooneConstants.AUTH_ID)))
+                return RedirectToAction("Login", "Authentication");
+
             try
             {
                 if (!ModelState.IsValid) return NotFound();
@@ -50,6 +57,9 @@ namespace OkooneBlogger.Controllers
 
         public IActionResult Edit(int id)
         {
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString(OkooneConstants.AUTH_ID)))
+                return RedirectToAction("Login", "Authentication");
+
             var user = _userRepository.GetById(id);
             return View(user);
         }
@@ -59,6 +69,9 @@ namespace OkooneBlogger.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, [Bind("Username, FullName, Email, Password, Id")] User user)
         {
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString(OkooneConstants.AUTH_ID)))
+                return RedirectToAction("Login", "Authentication");
+
             try
             {
                 _userRepository.UpdateAndSaved(user);
@@ -85,6 +98,9 @@ namespace OkooneBlogger.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
         {
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString(OkooneConstants.AUTH_ID)))
+                return RedirectToAction("Login", "Authentication");
+
             try
             {
                 // TODO: Add delete logic here

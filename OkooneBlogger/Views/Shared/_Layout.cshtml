@@ -1,4 +1,14 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+@using OkooneBlogger.Helpers
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    var authId = HttpContextAccessor.HttpContext.Session.GetString(OkooneConstants.AUTH_ID);
+    var authUsername = HttpContextAccessor.HttpContext.Session.GetString(OkooneConstants.AUTH_USERNAME);
+    var hasAuth = !string.IsNullOrEmpty(authId);
+}
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -46,20 +56,30 @@
     <div class="container menu-content">
         <div id="responsive-panel">
             @(Html.Kendo().Menu()
-                  .Name("Menu")
-                  .Items(items =>
-                  {
-                      items.Add()
-                          .Text("Home")
-                          .Action("Index", "Home");
-                      items.Add()
-                          .Text("Login")
-                          .Action("Login", "Authentication");
-                      items.Add()
-                          .Text("Register")
-                          .Action("Register", "Authentication");
-                  })
-                  )
+                                  .Name("Menu")
+                                  .Items(items =>
+                                  {
+                                      items.Add()
+                                          .Text("Home")
+                                          .Action("Index", "Home");
+                                      items.Add()
+                                          .Text("Login")
+                                          .Action("Login", "Authentication")
+                                          .Visible(!hasAuth);
+                                      items.Add()
+                                          .Text("Register")
+                                          .Action("Register", "Authentication")
+                                          .Visible(!hasAuth);
+                                      items.Add()
+                                          .Text("Administrator")
+                                          .Action("Admin", "Home")
+                                          .Visible(hasAuth);
+                                      items.Add()
+                                          .Text("Logout")
+                                          .Action("Logout", "Authentication")
+                                          .Visible(hasAuth);
+                                  })
+            )
         </div>
         <button id="configure" class="k-rpanel-toggle k-button k-primary btn-toggle"><span class="k-icon k-i-hbars"></span></button>
     </div>

@@ -12,5 +12,11 @@ namespace OkooneBlogger.Controllers
         {
             return View();
         }
+        
+        [HttpGet("Admin")]
+        public IActionResult Admin()
+        {
+            return View();
+        }
     }
 }

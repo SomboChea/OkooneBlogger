@@ -15,15 +15,14 @@ namespace OkooneBlogger.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Date = table.Column<DateTime>(nullable: false, defaultValue:DateTime.Now),
-                    FullName = table.Column<string>(nullable: true),
-                    Username = table.Column<string>(nullable: false),
-                    Email = table.Column<string>(nullable: true),
-                    Password = table.Column<string>(nullable: false)
+                    FullName = table.Column<string>(nullable: true, maxLength:50),
+                    Username = table.Column<string>(nullable: false, maxLength:50),
+                    Email = table.Column<string>(nullable: true, maxLength:50),
+                    Password = table.Column<string>(nullable: false, maxLength:50)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
-                    table.UniqueConstraint("UN_Users_Username", x => x.Username);
                 });
 
             migrationBuilder.CreateTable(
@@ -33,8 +32,8 @@ namespace OkooneBlogger.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Date = table.Column<DateTime>(nullable: false),
-                    Title = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
+                    Title = table.Column<string>(nullable: true, maxLength:255),
+                    Description = table.Column<string>(nullable: true, maxLength:1000),
                     AuthorId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>

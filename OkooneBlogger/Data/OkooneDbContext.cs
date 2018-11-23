@@ -13,6 +13,7 @@ namespace OkooneBlogger.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Models.User>().HasMany(a => a.Articles).WithOne(u => u.Author);
+            modelBuilder.Entity<Models.User>().HasIndex(a => a.Username).IsUnique();
         }
 
         public DbSet<Models.Article> Articles { get; set; } 
