@@ -15,6 +15,7 @@
 <br />
 
     dotnet restore
+    dotnet database update --context OkooneDbContext
     dotnet run
 ---
 ## Functional
