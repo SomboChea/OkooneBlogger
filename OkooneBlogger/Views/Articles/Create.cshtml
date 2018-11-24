@@ -13,6 +13,7 @@
     var users = (IEnumerable<OkooneBlogger.Models.User>)ViewData["users"];
 
 }
+<h3 style="text-align: center"><b>Create Article</b></h3>
 <hr />
 <div class="row">
     <div class="col-md-12">
@@ -37,8 +38,7 @@
                                           .Destroy("Destroy", "ImageBrowser")
                                           .Upload("Upload", "ImageBrowser")
                                       )
-                                      .Value(@<text>
-                                    </text>)
+                                      .Value("")
                 )
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>

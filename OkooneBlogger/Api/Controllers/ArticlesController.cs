@@ -17,34 +17,40 @@ namespace OkooneBlogger.Api.Controllers
             _articleRepository = articleRepository;
         }
 
+        private IEnumerable<Article> GetArticles(string date, bool withAuthors, bool hasDate)
+        {
+            if (withAuthors)
+                return hasDate
+                    ? _articleRepository.FindWithAuthor(a => a.Date < Convert.ToDateTime(date))
+                    : _articleRepository.GetAllWithAuthor();
+            {
+                if (hasDate)
+                    return _articleRepository.Find(a =>
+                        a.Date < Convert.ToDateTime(date));
+
+                return _articleRepository.GetAll();
+            }
+        }
+
+        private static void CheckParameters(string date, string with, ref bool withAuthors, ref bool hasDate)
+        {
+            if (string.IsNullOrEmpty(date))
+            {
+                if (with.ToLower().Equals("authors")) withAuthors = true;
+            }
+            else
+            {
+                hasDate = true;
+            }
+        }
+
         [HttpGet]
         public IEnumerable<Article> Get(string date, string with = "")
         {
             var withAuthors = false;
-            if (string.IsNullOrEmpty(date))
-            {
-                if (with.ToLower().Equals("authors"))
-                    withAuthors = true;
-            }
-
-            if (withAuthors)
-            {
-                if (!string.IsNullOrEmpty(date))
-                {
-                    return _articleRepository.FindWithAuthor(a =>
-                        (a.Date < Convert.ToDateTime(date)));
-                }
-
-                return _articleRepository.GetAllWithAuthor();
-            }
-
-            if (!string.IsNullOrEmpty(date))
-            {
-                return _articleRepository.Find(a =>
-                    (a.Date < Convert.ToDateTime(date)));
-            }
-
-            return _articleRepository.GetAll();
+            var hasDate = false;
+            CheckParameters(date, with, ref withAuthors, ref hasDate);
+            return GetArticles(date, withAuthors, hasDate);
         }
 
         [HttpGet("find/{date}")]

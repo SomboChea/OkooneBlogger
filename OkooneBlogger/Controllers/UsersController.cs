@@ -18,35 +18,49 @@ namespace OkooneBlogger.Controllers
             _userRepository = userRepository;
         }
 
+        private int GetAuthIdFromSession
+        {
+            get
+            {
+                int.TryParse(HttpContext.Session.GetString(OkooneConstants.AUTH_ID), out var authId);
+                return authId;
+            }
+        }
+
+        private IEnumerable<User> GetUsers(string q)
+        {
+            return !string.IsNullOrEmpty(q)
+                            ? _userRepository.Find
+                            (a =>
+                                a.FullName.ToLower().Contains(q.ToLower()) ||
+                                a.Email.ToLower().Contains(q.ToLower()) ||
+                                a.Username.ToLower().Contains(q.ToLower())
+                            )
+                            : _userRepository.GetAllWithArticles();
+        }
+
+        private static IEnumerable<User> SortUsers(string sort, IEnumerable<User> users)
+        {
+            if (!string.IsNullOrEmpty(sort) && (sort.ToLower().Equals("desc") || sort.ToLower().Equals("descending")))
+            {
+                users = users.OrderByDescending(a => a.Id);
+            }
+
+            return users;
+        }
+
+        [HttpGet]
         public IActionResult Index(string q, string sort)
         {
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString(OkooneConstants.AUTH_ID)))
-                return RedirectToAction("Login", "Authentication");
+            if (GetAuthIdFromSession <= 0) return RedirectToAction("Login", "Authentication");
 
-            IEnumerable<User> users;
-
-            if (!string.IsNullOrEmpty(q))
-            {
-                q = q.ToLower();
-                users = _userRepository.Find(a =>
-                    (a.FullName.ToLower().Contains(q) || a.Email.ToLower().Contains(q) || a.Username.ToLower().Contains(q)));
-            }
-            else
-            {
-                users = _userRepository.GetAllWithArticles();
-            }
-
-            if (!string.IsNullOrEmpty(sort))
-            {
-                if (sort.ToLower().Equals("desc") || sort.ToLower().Equals("descending"))
-                {
-                    users = users.OrderByDescending(a => a.Id);
-                }
-            }
+            var users = GetUsers(q);
+            users = SortUsers(sort, users);
 
             return View(users);
         }
 
+        [HttpGet]
         public IActionResult Create()
         {
             return View();
@@ -56,14 +70,11 @@ namespace OkooneBlogger.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind("Username, Email, Password, FullName, Id, Date")] User user)
         {
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString(OkooneConstants.AUTH_ID)))
-                return RedirectToAction("Login", "Authentication");
+            if (GetAuthIdFromSession <= 0) return RedirectToAction("Login", "Authentication");
 
             try
             {
-                // if (!ModelState.IsValid) return NotFound();
                 _userRepository.AddAndSaved(user);
-
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception e)
@@ -74,8 +85,7 @@ namespace OkooneBlogger.Controllers
 
         public IActionResult Edit(int id)
         {
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString(OkooneConstants.AUTH_ID)))
-                return RedirectToAction("Login", "Authentication");
+            if (GetAuthIdFromSession <= 0) return RedirectToAction("Login", "Authentication");
 
             var user = _userRepository.GetById(id);
             return View(user);
@@ -85,8 +95,7 @@ namespace OkooneBlogger.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, [Bind("Username, FullName, Email, Password, Id")] User user)
         {
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString(OkooneConstants.AUTH_ID)))
-                return RedirectToAction("Login", "Authentication");
+            if (GetAuthIdFromSession <= 0) return RedirectToAction("Login", "Authentication");
 
             try
             {
@@ -99,16 +108,10 @@ namespace OkooneBlogger.Controllers
             }
         }
 
-        public IActionResult Details(int id)
-        {
-            return null;
-        }
-
         [HttpGet]
         public IActionResult Delete(int id)
         {
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString(OkooneConstants.AUTH_ID)))
-                return RedirectToAction("Login", "Authentication");
+            if (GetAuthIdFromSession <= 0) return RedirectToAction("Login", "Authentication");
 
             try
             {

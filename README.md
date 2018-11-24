@@ -10,6 +10,15 @@
 * Newtonsoft (Latest)
 * Session
 ---
+## Design Patterns
+* OOP (Interface, Abstract, Inheritance, Encapsulation, Polymorphism)
+* Repositories
+    * ArticleRepository
+    * UserRepository
+* Dependency Injection
+    * IArticleRepository
+    * IUserRepository
+---
 ## Installation
     git clone https://github.com/SomboChea/OkooneBlogger.git
 <br />

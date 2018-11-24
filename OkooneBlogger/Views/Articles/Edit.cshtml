@@ -1,11 +1,13 @@
-﻿@model OkooneBlogger.Models.Article
+﻿@using Microsoft.AspNetCore.Html
+@model OkooneBlogger.Models.Article
 
 @{
     ViewData["Title"] = "Edit";
     Layout = "_AdminLayout";
 }
 
-<h4>Article</h4>
+<h3 style="text-align: center"><b>Edit Article</b></h3>
+
 <hr />
 <div class="row">
     <div class="col-md-12">
@@ -21,18 +23,15 @@
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
                 @(Html.Kendo().EditorFor(a => a.Description)
-                              .HtmlAttributes(new { style = "height:440px", aria_label = "editor" })
-                              .Resizable(resizable => resizable.Content(true).Toolbar(true))
-                              .ImageBrowser(imageBrowser => imageBrowser
-                                  .Image("~/shared/UserFiles/Images/{0}")
-                                  .Read("Read", "ImageBrowser")
-                                  .Create("Create", "ImageBrowser")
-                                  .Destroy("Destroy", "ImageBrowser")
-                                  .Upload("Upload", "ImageBrowser")
-                              )
-                              .Value(@<text>
-                                ViewBag.Description
-                            </text>)
+                                      .HtmlAttributes(new { style = "height:440px", aria_label = "editor" })
+                                      .Resizable(resizable => resizable.Content(true).Toolbar(true))
+                                      .ImageBrowser(imageBrowser => imageBrowser
+                                          .Image("~/shared/UserFiles/Images/{0}")
+                                          .Read("Read", "ImageBrowser")
+                                          .Create("Create", "ImageBrowser")
+                                          .Destroy("Destroy", "ImageBrowser")
+                                          .Upload("Upload", "ImageBrowser")
+                      ).Value(@<text></text>)
                 )
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
