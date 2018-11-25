@@ -15,6 +15,9 @@
 * Repositories
     * ArticleRepository
     * UserRepository
+* Unit of Work
+    * Articles (List All Articles with Search and Sort)
+    * Users (List All Users)
 * Dependency Injection
     * IArticleRepository
     * IUserRepository
